@@ -289,11 +289,10 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
       }
     });
 
-    await control?.reverse();
-
     final messages = Provider.of<LoginMessages>(context, listen: false);
 
     if (!DartHelper.isNullOrEmpty(error)) {
+      await control?.reverse();
       showErrorToast(context, messages.flushbarTitleError, error!);
       Future.delayed(const Duration(milliseconds: 271), () {
         if (mounted) {
@@ -316,6 +315,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
             additionalSignupData: auth.additionalSignupData
           ),
         );
+        await control?.reverse();
         if (!DartHelper.isNullOrEmpty(error)) {
           showErrorToast(context, messages.flushbarTitleError, error!);
           Future.delayed(const Duration(milliseconds: 271), () {
@@ -326,8 +326,10 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
           return false;
         }
       }
+      await control?.reverse();
       widget.onSwitchSignUpAdditionalData();
     } else {
+      await control?.reverse();
       widget.onSubmitCompleted!();
     }
     return true;

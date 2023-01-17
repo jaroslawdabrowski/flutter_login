@@ -42,6 +42,8 @@ typedef RecoverCallback = Future<String?>? Function(String);
 /// The result is an error message, callback successes if message is null
 typedef ConfirmSignupCallback = Future<String?>? Function(String, LoginData);
 
+typedef ConfirmSignupRequiredCallback = Future<bool> Function(LoginData);
+
 /// The result is an error message, callback successes if message is null
 typedef ConfirmRecoverCallback = Future<String?>? Function(String, LoginData);
 
@@ -53,6 +55,7 @@ class Auth with ChangeNotifier {
     this.onRecoverPassword,
     this.onConfirmRecover,
     this.onConfirmSignup,
+    this.confirmSignupRequired,
     this.onResendCode,
     this.beforeAdditionalFieldsCallback,
     String email = '',
@@ -71,6 +74,7 @@ class Auth with ChangeNotifier {
   final List<LoginProvider> loginProviders;
   final ConfirmRecoverCallback? onConfirmRecover;
   final ConfirmSignupCallback? onConfirmSignup;
+  final ConfirmSignupRequiredCallback? confirmSignupRequired;
   final SignupCallback? onResendCode;
   final List<TermOfService> termsOfService;
   final BeforeAdditionalFieldsCallback? beforeAdditionalFieldsCallback;

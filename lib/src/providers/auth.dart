@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_login/flutter_login.dart';
@@ -29,6 +31,9 @@ typedef ProviderNeedsSignUpCallback = Future<bool> Function();
 
 // Provides default value for the field
 typedef DefaultValueProvider = String? Function();
+
+// Callback that returns suggestion for the given input
+typedef SuggestionsCallback = FutureOr<Iterable<String>> Function(String);
 
 /// The result is an error message, callback successes if message is null
 typedef ProviderAuthCallback = Future<String?>? Function();

@@ -24,6 +24,9 @@ class UserFormField {
   /// Defaults to LoginUserType.user
   final LoginUserType userType;
 
+  // Autocomplete suggestions callback for the user form field
+  final SuggestionsCallback? suggestionsCallback;
+
   const UserFormField({
     required this.keyName,
     String? displayName,
@@ -31,5 +34,6 @@ class UserFormField {
     this.icon,
     this.fieldValidator,
     this.userType = LoginUserType.name,
+    this.suggestionsCallback,
   }) : displayName = displayName ?? keyName;
 }

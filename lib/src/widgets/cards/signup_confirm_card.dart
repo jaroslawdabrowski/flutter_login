@@ -44,12 +44,14 @@ class _ConfirmSignupCardState extends State<_ConfirmSignupCard>
     );
 
     listenForCode();
+    ConfirmationListeners.instance.register((code) => _enterCode(code, ''));
   }
 
   @override
   void dispose() {
     _fieldSubmitController.dispose();
     cancel();
+    ConfirmationListeners.instance.clear();
     super.dispose();
   }
 

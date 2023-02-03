@@ -52,6 +52,7 @@ class AnimatedTextFormField extends StatefulWidget {
     this.autocorrect = false,
     this.autofillHints,
     this.suggestionsCallback,
+    this.tooltip,
   }) : assert(
           (inertiaController == null && inertiaDirection == null) ||
               (inertiaController != null && inertiaDirection != null),
@@ -79,6 +80,7 @@ class AnimatedTextFormField extends StatefulWidget {
   final ValueChanged<String>? onFieldSubmitted;
   final FormFieldSetter<String>? onSaved;
   final TextFieldInertiaDirection? inertiaDirection;
+  final InlineSpan? tooltip;
 
   @override
   State<AnimatedTextFormField> createState() => _AnimatedTextFormFieldState();
@@ -349,6 +351,31 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
         enabled: widget.enabled,
         autocorrect: widget.autocorrect,
         autofillHints: widget.autofillHints,
+      );
+    }
+
+    if (widget.tooltip != null) {
+      var tooltipKey = GlobalKey<TooltipState>();
+      var tooltip = Tooltip(
+        key: tooltipKey,
+        richMessage: widget.tooltip,
+        showDuration: const Duration(seconds: 30),
+        triggerMode: TooltipTriggerMode.manual,
+        margin: EdgeInsets.all(4),
+        child: textField,
+      );
+      textField = Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(child: tooltip,),
+          IconButton(
+            padding: EdgeInsets.zero,
+            onPressed: () => tooltipKey.currentState?.ensureTooltipVisible(),
+            color: theme.primaryColor,
+            iconSize: 28,
+            icon: const Icon(Icons.info),
+          )
+        ],
       );
     }
 

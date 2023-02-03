@@ -140,6 +140,7 @@ fieldValidator | `FormFieldValidator<String>` | A function to validate the field
 icon | `Icon?` | The icon shown on the left of the field. Defaults to the user icon when not provided
 userType | `LoginUserType` | The LoginUserType of the form. The right keyboard and suggestions will be shown accordingly. Defaults to `LoginUserType.user`
 suggestionsCallback | `SuggestionsCallback` | Autocomplete suggestions callback
+tooltip | `InlineSpan` | Additional description for that field
 
 
 ### LoginProvider

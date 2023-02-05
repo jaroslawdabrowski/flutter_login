@@ -53,6 +53,7 @@ class AnimatedTextFormField extends StatefulWidget {
     this.autofillHints,
     this.suggestionsCallback,
     this.tooltip,
+    this.possibleValues,
   }) : assert(
           (inertiaController == null && inertiaDirection == null) ||
               (inertiaController != null && inertiaDirection != null),
@@ -81,6 +82,7 @@ class AnimatedTextFormField extends StatefulWidget {
   final FormFieldSetter<String>? onSaved;
   final TextFieldInertiaDirection? inertiaDirection;
   final InlineSpan? tooltip;
+  final List<String>? possibleValues;
 
   @override
   State<AnimatedTextFormField> createState() => _AnimatedTextFormFieldState();
@@ -96,6 +98,8 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
   late Animation<double> iconTranslateAnimation;
 
   PhoneNumber? _phoneNumberInitialValue;
+
+  FocusNode? _focusNode;
 
   @override
   void initState() {
@@ -181,6 +185,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
         }
       }
     }
+    _focusNode = widget.focusNode ?? FocusNode();
   }
 
   void _updateSizeAnimation() {
@@ -269,7 +274,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
         child: InternationalPhoneNumberInput(
           key: widget.textFormFieldKey,
           cursorColor: theme.primaryColor,
-          focusNode: widget.focusNode,
+          focusNode: _focusNode,
           inputDecoration: _getInputDecoration(theme),
           searchBoxDecoration: const InputDecoration(
               contentPadding: EdgeInsets.only(left: 20),
@@ -303,7 +308,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
         textFieldConfiguration: ac.TextFieldConfiguration(
           controller: widget.controller,
           cursorColor: theme.primaryColor,
-          focusNode: widget.focusNode,
+          focusNode: _focusNode,
           decoration: _getInputDecoration(theme),
           keyboardType: widget.keyboardType ?? TextInputType.text,
           textInputAction: widget.textInputAction,
@@ -335,12 +340,39 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
         autoFlipDirection: true,
         hideOnEmpty: true,
       );
+    } else if (widget.userType == LoginUserType.dropdown) {
+      textField = DropdownButtonFormField<String>(
+        key: widget.textFormFieldKey,
+        items: (widget.possibleValues ?? [])
+            .map(
+              (e) =>
+              DropdownMenuItem<String>(
+                value: e,
+                child: Text(e),
+              ),
+        )
+            .toList(),
+        onChanged: (newValue) {
+          if (newValue != null) {
+            widget.controller?.text = newValue;
+          } else {
+            widget.controller?.clear();
+          }
+        },
+        value: (widget.controller?.text.isNotEmpty ?? false)
+            ? widget.controller?.text
+            : null,
+        decoration: _getInputDecoration(theme),
+        onSaved: widget.onSaved,
+        focusNode: _focusNode,
+        validator: widget.validator,
+      );
     } else {
       textField = TextFormField(
         key: widget.textFormFieldKey,
         cursorColor: theme.primaryColor,
         controller: widget.controller,
-        focusNode: widget.focusNode,
+        focusNode: _focusNode,
         decoration: _getInputDecoration(theme),
         keyboardType: widget.keyboardType,
         textInputAction: widget.textInputAction,

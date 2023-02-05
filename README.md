@@ -127,6 +127,7 @@ EMAIL | The User Field will be set to be email
 NAME  | The User Field will be set to be username
 PHONE  | The User Field will be set to be phone
 INTLPHONE  | The User Field will be set to be phone with country code selection
+DROPDOWN  | The User Field will be set to be value selected from the dropdown
 
 [LoginUserType] will change how the user field [TextField] behaves. Autofills and Keyboard Type will be adjusted automatically for the type of user that you pass.
 
@@ -141,6 +142,7 @@ icon | `Icon?` | The icon shown on the left of the field. Defaults to the user i
 userType | `LoginUserType` | The LoginUserType of the form. The right keyboard and suggestions will be shown accordingly. Defaults to `LoginUserType.user`
 suggestionsCallback | `SuggestionsCallback` | Autocomplete suggestions callback
 tooltip | `InlineSpan` | Additional description for that field
+possibleValues | `List<String>` | If userType=dropdown, then use this as a list of possible values
 
 
 ### LoginProvider

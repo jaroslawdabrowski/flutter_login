@@ -193,6 +193,7 @@ class _AdditionalSignUpCardState extends State<_AdditionalSignUpCard>
               validator: formField.fieldValidator,
               suggestionsCallback: formField.suggestionsCallback,
               tooltip: formField.tooltip,
+              possibleValues: formField.possibleValues,
             ),
             const SizedBox(
               height: 5,

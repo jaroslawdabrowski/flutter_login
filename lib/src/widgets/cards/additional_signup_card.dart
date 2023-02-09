@@ -106,8 +106,6 @@ class _AdditionalSignUpCardState extends State<_AdditionalSignUpCard>
   }
 
   Future<bool> _submit() async {
-    FocusScope.of(context).unfocus();
-
     final messages = Provider.of<LoginMessages>(context, listen: false);
 
     if (!_formCompleteSignupKey.currentState!.validate()) {

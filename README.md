@@ -125,9 +125,12 @@ Enum     |   Description |
 -------- |---------------|
 EMAIL | The User Field will be set to be email
 NAME  | The User Field will be set to be username
+FIRSTNAME  | The User Field will be set to be first name
+LASTNAME  | The User Field will be set to be last name
 PHONE  | The User Field will be set to be phone
 INTLPHONE  | The User Field will be set to be phone with country code selection
 DROPDOWN  | The User Field will be set to be value selected from the dropdown
+TEXT  | The User Field will be set to be text
 
 [LoginUserType] will change how the user field [TextField] behaves. Autofills and Keyboard Type will be adjusted automatically for the type of user that you pass.
 

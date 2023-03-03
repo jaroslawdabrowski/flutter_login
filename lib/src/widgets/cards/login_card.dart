@@ -341,28 +341,32 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
     LoginMessages messages,
     Auth auth,
   ) {
-    return AnimatedTextFormField(
-      textFormFieldKey: _userFieldKey,
-      userType: widget.userType,
-      controller: _nameController,
-      width: width,
-      loadingController: widget.loadingController,
-      interval: _nameTextFieldLoadingAnimationInterval,
-      labelText:
-          messages.userHint ?? TextFieldUtils.getLabelText(widget.userType),
-      autofillHints: _isSubmitting
-          ? null
-          : [TextFieldUtils.getAutofillHints(widget.userType)],
-      prefixIcon: TextFieldUtils.getPrefixIcon(widget.userType),
-      keyboardType: TextFieldUtils.getKeyboardType(widget.userType),
-      textInputAction: TextInputAction.next,
-      focusNode: _userFocusNode,
-      onFieldSubmitted: (value) {
-        FocusScope.of(context).requestFocus(_passwordFocusNode);
-      },
-      validator: widget.userValidator,
-      onSaved: (value) => auth.email = value!,
-      enabled: !_isSubmitting,
+    return Semantics(
+      key: const ValueKey("userField"),
+      label: "User Field",
+      child: AnimatedTextFormField(
+        textFormFieldKey: _userFieldKey,
+        userType: widget.userType,
+        controller: _nameController,
+        width: width,
+        loadingController: widget.loadingController,
+        interval: _nameTextFieldLoadingAnimationInterval,
+        labelText:
+            messages.userHint ?? TextFieldUtils.getLabelText(widget.userType),
+        autofillHints: _isSubmitting
+            ? null
+            : [TextFieldUtils.getAutofillHints(widget.userType)],
+        prefixIcon: TextFieldUtils.getPrefixIcon(widget.userType),
+        keyboardType: TextFieldUtils.getKeyboardType(widget.userType),
+        textInputAction: TextInputAction.next,
+        focusNode: _userFocusNode,
+        onFieldSubmitted: (value) {
+          FocusScope.of(context).requestFocus(_passwordFocusNode);
+        },
+        validator: widget.userValidator,
+        onSaved: (value) => auth.email = value!,
+        enabled: !_isSubmitting,
+      ),
     );
   }
 

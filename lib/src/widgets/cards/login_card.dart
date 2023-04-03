@@ -115,9 +115,10 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
         curve: const Interval(.4, 1.0, curve: Curves.easeOutBack),
       ),
     );
-    
+
     _userFocusNode.addListener(() {
-      if (!_userFocusNode.hasFocus && (widget.validateUserImmediately ?? false)) {
+      if (!_userFocusNode.hasFocus &&
+          (widget.validateUserImmediately ?? false)) {
         _userFieldKey.currentState?.validate();
       }
     });
@@ -443,7 +444,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
             : null,
         child: Text(
           messages.forgotPasswordButton,
-          style: theme.textTheme.bodyText2,
+          style: theme.textTheme.bodyMedium,
           textAlign: TextAlign.left,
         ),
       ),

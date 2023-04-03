@@ -269,7 +269,7 @@ class _AdditionalSignUpCardState extends State<_AdditionalSignUpCard>
                     messages.additionalSignUpFormDescription,
                     key: kRecoverPasswordIntroKey,
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyText2,
+                    style: theme.textTheme.bodyMedium,
                   ),
                 ),
                 _buildFields(textFieldWidth),

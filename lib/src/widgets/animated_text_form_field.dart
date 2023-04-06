@@ -404,31 +404,6 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
     }
 
     if (widget.tooltip != null) {
-      var tooltipKey = GlobalKey<TooltipState>();
-      var tooltip = Tooltip(
-        key: tooltipKey,
-        richMessage: widget.tooltip,
-        showDuration: const Duration(seconds: 30),
-        triggerMode: TooltipTriggerMode.manual,
-        margin: EdgeInsets.all(4),
-        child: textField,
-      );
-      textField = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(child: tooltip,),
-          IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () => tooltipKey.currentState?.ensureTooltipVisible(),
-            color: theme.primaryColor,
-            iconSize: 28,
-            icon: const Icon(Icons.info),
-          )
-        ],
-      );
-    }
-
-    if (widget.tooltip != null) {
       final tooltipKey = GlobalKey<TooltipState>();
       final tooltip = Tooltip(
         key: tooltipKey,

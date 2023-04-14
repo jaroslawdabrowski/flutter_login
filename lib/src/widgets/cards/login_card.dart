@@ -315,6 +315,7 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
             password: auth.password,
             termsOfService: auth.getTermsOfServiceResults(),
             additionalSignupData: auth.additionalSignupData
+
           ),
         );
         await control?.reverse();

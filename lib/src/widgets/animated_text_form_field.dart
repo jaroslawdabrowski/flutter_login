@@ -177,7 +177,8 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
             _phoneNumberInitialValue = PhoneNumber(
                 phoneNumber: parsed.nsn,
                 isoCode: parsed.isoCode.name,
-                dialCode: parsed.countryCode);
+                dialCode: parsed.countryCode,
+            );
           }
         } on pnp.PhoneNumberException {
           // ignore

@@ -54,6 +54,8 @@ class AnimatedTextFormField extends StatefulWidget {
     this.suggestionsCallback,
     this.tooltip,
     this.possibleValues,
+    this.onChanged,
+    this.formFieldController,
   }) : assert(
           (inertiaController == null && inertiaDirection == null) ||
               (inertiaController != null && inertiaDirection != null),
@@ -83,6 +85,8 @@ class AnimatedTextFormField extends StatefulWidget {
   final TextFieldInertiaDirection? inertiaDirection;
   final InlineSpan? tooltip;
   final List<String>? possibleValues;
+  final ValueChanged<String?>? onChanged;
+  final FormFieldController? formFieldController;
 
   @override
   State<AnimatedTextFormField> createState() => _AnimatedTextFormFieldState();
@@ -187,6 +191,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
         }
       }
     }
+    widget.formFieldController?.addListener(handleValueChange);
     _focusNode = widget.focusNode ?? FocusNode();
   }
 
@@ -224,7 +229,17 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
   @override
   void dispose() {
     widget.inertiaController?.removeStatusListener(handleAnimationStatus);
+    widget.formFieldController?.removeListener(handleValueChange);
     super.dispose();
+  }
+
+  void handleValueChange() {
+    setState(() {
+      if (widget.controller != null) {
+        widget.controller!.text = widget.formFieldController!.value ?? '';
+      }
+      _phoneNumberController.text = widget.formFieldController!.value ?? '';
+    });
   }
 
   void handleAnimationStatus(AnimationStatus status) {
@@ -300,6 +315,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
                 RegExp('^([\\+]${phoneNumber.dialCode!.replaceAll('+', '')}[\\s]?)'),
                 '',
               );
+              widget.onChanged?.call(_phoneNumberController.text);
             }
             _phoneNumberController.selection = TextSelection.collapsed(offset: _phoneNumberController.text.length);
           },
@@ -340,6 +356,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
         },
         onSuggestionSelected: (suggestion) {
           widget.controller?.text = suggestion;
+          widget.onChanged?.call(suggestion);
         },
         validator: widget.validator,
         onSaved: widget.onSaved,
@@ -353,6 +370,11 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
         autoFlipDirection: true,
         hideOnEmpty: true,
       );
+      _focusNode?.addListener(() {
+        if (!_focusNode!.hasFocus) {
+          widget.onChanged?.call(widget.controller?.text);
+        }
+      });
     } else if (widget.userType == LoginUserType.dropdown) {
       textField = DropdownButtonFormField<String>(
         key: widget.textFormFieldKey,
@@ -374,6 +396,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
           } else {
             widget.controller?.clear();
           }
+          widget.onChanged?.call(newValue);
         },
         value: (widget.controller?.text.isNotEmpty ?? false)
             ? widget.controller?.text
@@ -401,6 +424,7 @@ class _AnimatedTextFormFieldState extends State<AnimatedTextFormField> {
         enabled: widget.enabled,
         autocorrect: widget.autocorrect,
         autofillHints: widget.autofillHints,
+        onChanged: widget.onChanged,
       );
     }
 

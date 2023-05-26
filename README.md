@@ -147,6 +147,8 @@ userType | `LoginUserType` | The LoginUserType of the form. The right keyboard a
 suggestionsCallback | `SuggestionsCallback` | Autocomplete suggestions callback
 tooltip | `InlineSpan` | Additional description for that field
 possibleValues | `List<String>` | If userType=dropdown, then use this as a list of possible values
+onChanged | `ValueChanged<String?>?` | Executes when value of the form filed changes
+controller | `FormFieldController` | Controller of the form field value
 
 
 ### LoginProvider

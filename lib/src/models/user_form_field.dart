@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/flutter_login.dart';
 import 'package:flutter_login/src/models/login_user_type.dart';
 import 'package:flutter_login/src/providers/auth.dart';
 
@@ -32,6 +33,12 @@ class UserFormField {
   // list of possible values for the dropdown (only makes sense if userType=dropdown)
   final List<String>? possibleValues;
 
+  // executed when value of user form field changes
+  final ValueChanged<String?>? onChanged;
+
+  // controller to change value of form field
+  final FormFieldController? controller;
+
   const UserFormField({
     required this.keyName,
     String? displayName,
@@ -42,5 +49,7 @@ class UserFormField {
     this.suggestionsCallback,
     this.tooltip,
     this.possibleValues,
+    this.onChanged,
+    this.controller,
   }) : displayName = displayName ?? keyName;
 }
